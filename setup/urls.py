@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler404
 import debug_toolbar
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('myfirstapp/', include('myfirstapp.urls')),
-    path('__debug__/', include(debug_toolbar.urls)), # JSF Added for debugging
+    path("polls/", include("polls.urls")),
+    path('__debug__/', include(debug_toolbar.urls)), # 🌳 Added for debugging
 ]
+
+handler404 = 'myfirstapp.views.handler404' # 🌳 Added for 404

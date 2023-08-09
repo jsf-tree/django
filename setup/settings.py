@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+71j_ksg*tthain!txl4+li4#e$_-*16to^vjj4wmc(#8j0in0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # 🌳 Set to False to see 404 debug
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # 🌳 changed [] to ['*']
 
 
 # Application definition
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    #'django.contrib.sessions', # Legacy
+    #'django.contrib.sessions', # 🌳 Legacy
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myfirstapp', # New app just created
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware', # JSF Added for debugging
+    'debug_toolbar.middleware.DebugToolbarMiddleware', # 🌳 Added for debugging
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# JSF Added for debugging
+# 🌳 Added for debugging
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
