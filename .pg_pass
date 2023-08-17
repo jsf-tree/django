@@ -1,0 +1,1 @@
+localhost:5432:db_w_postgis:django:django

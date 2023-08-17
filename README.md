@@ -24,8 +24,9 @@ pip3 install pipenv
 ## Getting started with Django
 ### 1. Create a Project called setup.
 ```bash
-# Install django to the pipenv
-pipenv install django
+# Install django and psycopg2¹ to the pipenv
+pipenv install django psycopg2-binary
+#¹ normal psycopg2 continuously fail <https://github.com/pypa/pipenv/issues/3991>
 
 # Activate the virtual environment
 pipenv shell
@@ -290,3 +291,24 @@ Highly-related entities are kept together, maintaining the apps self-contained a
 - Tags
     - Tag
     - TaggesItem
+
+
+Procedures to set PostgreSQL-Django
+get a PostgreSQL server online
+permit connections in postgres' directory `data/postgresql.conf` file. Allow the addresses in `listen_addresses = '*'`
+allow it also in `pg_hba.conf` by making `host all all 0.0.0.0/0 md5`.  
+Moreover, .pg_pass must be in the django root folder, same directory where apps and projects are. The service `my_service` must be in the home directory.
+In WSL, to install postgresql with postgis:
+```shell
+sudo apt update
+sudo apt install postgresql postgresql-contrib postgis
+sudo systemctl enable postgresql
+sudo systemctl start postgresql
+
+# "sudo service" is the older version of "sudo systemctl"
+# "sudo service" does not have as advanced tooling as "sudo systemctl"
+#  but it can start/stop/restart the services with
+#      sudo service postgresql start/stop/restart
+```
+
+After the database is set. When you run "python manage.py migrate", all necessary tables for the INSTALLED_APPS will be created.

@@ -85,8 +85,12 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql', #'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        "OPTIONS": {
+            "service": "my_service",  # psql --host=localhost --port=5432 --username=django --dbname=db_w_postgis
+            "passfile": ".pg_pass",   # must be in format of "hostname:port:database:username:password"
+        },
     }
 }
 
@@ -115,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo' # 🌳 Tutorial 'UTC'
 
 USE_I18N = True
 
