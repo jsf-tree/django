@@ -1,15 +1,15 @@
 # Django
-It is a popular Python framework for backend webdevelopment ([documentation](https://docs.djangoproject.com/)). Found these two tutorials on YouTube: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0) and [Mosh](https://youtu.be/rHux0gMZ3Eg). Both videos suggest Django is nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to frontend.
+A popular Python framework for backend webdev ([documentation](https://docs.djangoproject.com/)). Nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to frontend.
 
-## pipenv
-For WSL2-users: update Python3 to the last available version in the respective WSL Distro, and install `pip3` and, to manage virtual environments and avoid clashes between dependencies, `pipenv`.
+Tutorials on YouTube: 
+- [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0)
+- [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envinroments and dependencies. 
 ```bash
-# Update APT and Python3
+# Update APT & upgrade Python3
 sudo apt update
 sudo apt upgrade python3
 
 # Install pip3 + pipenv
-sudo apt update
 sudo apt install python3-pip
 pip3 install pipenv
 ```
@@ -25,7 +25,7 @@ pip3 install pipenv
 ### 1. Create a Project called setup.
 ```bash
 # Install django and psycopg2¹ to the pipenv
-pipenv install django psycopg2-binary
+pipenv install django psycopg2-binary django-debug-toolbar
 #¹ normal psycopg2 continuously fail <https://github.com/pypa/pipenv/issues/3991>
 
 # Activate the virtual environment
@@ -208,8 +208,8 @@ INTERNAL_IPS = [
 ```
 The toolbar only appears if a html document is being served. Within the toolbar, the SQL panel shows the queries called in the database. When querying the database using Djangos querying relational mapper, it generates queries and send to the database (here the generated queries can be seen).
 
-### 8. Models
-Class-based representations of our database table and are in the core of how we design or database. It inherits from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m.
+### 8. Models (Database tables)
+Class-based representations of our database table and are in the core of how we design the database. It inherits from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m.
 ```python
 class Project(models.Model):
     title = models.charField()
@@ -312,3 +312,6 @@ sudo systemctl start postgresql
 ```
 
 After the database is set. When you run "python manage.py migrate", all necessary tables for the INSTALLED_APPS will be created.
+
+
+After defining tables in models.py and adding the app to installed_apps, the 1st step  is to tell Django changed where made to the models app and they should be stored as a _migration_: `python manage.py makemigrations <app>`. To check what SQL that migration would run, type `python manage.py sqlmigrate <app> <migration_id>`. The migration id of `app/migrations/0001_initial.py` is `0001`. Execute the migration with `python manage.py migrate`.

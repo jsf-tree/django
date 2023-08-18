@@ -31,14 +31,15 @@ ALLOWED_HOSTS = ['*']  # 🌳 changed [] to ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'myfirstapp', # New app just created
+    'debug_toolbar', # JSF Added for debugging
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     #'django.contrib.sessions', # 🌳 Legacy
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myfirstapp', # New app just created
-    'debug_toolbar', # JSF Added for debugging
 ]
 
 MIDDLEWARE = [
