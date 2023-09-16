@@ -31,15 +31,15 @@ ALLOWED_HOSTS = ['*']  # 🌳 changed [] to ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'myfirstapp', # New app just created
-    'debug_toolbar', # JSF Added for debugging
-    'polls.apps.PollsConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    #'django.contrib.sessions', # 🌳 Legacy
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'myfirstapp', # 🌳 New app
+    'debug_toolbar', # 🌳 Added for debugging
+    'polls.apps.PollsConfig', # 🌳 New App - Polls Config File
+    'django.contrib.admin', # 🌳 The Admin site
+    'django.contrib.auth', # 🌳 An authentication system
+    'django.contrib.contenttypes', # 🌳 A framework for content types
+    #'django.contrib.sessions', # 🌳 Legacy - a session framework
+    'django.contrib.messages', # 🌳 A messaging framework
+    'django.contrib.staticfiles', # 🌳 A framework for managing static files
 ]
 
 MIDDLEWARE = [
@@ -83,11 +83,12 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# 🌳 I changed the default sqlite3 DB to PostgreSQL.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql', #'django.db.backends.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         "OPTIONS": {
             "service": "my_service",  # psql --host=localhost --port=5432 --username=django --dbname=db_w_postgis
             "passfile": ".pg_pass",   # must be in format of "hostname:port:database:username:password"
@@ -120,7 +121,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Sao_Paulo' # 🌳 Tutorial 'UTC'
+# 🌳 I set the TIME_ZONE to my time zone
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo' 
 
 USE_I18N = True
 

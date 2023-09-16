@@ -1,9 +1,15 @@
 # Django
-A popular Python framework for backend webdev ([documentation](https://docs.djangoproject.com/)). Nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to frontend.
+A popular Python framework for backend webdev ([documentation](https://docs.djangoproject.com/)), nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
 
-Tutorials on YouTube: 
-- [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0)
-- [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envinroments and dependencies. 
+Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies. 
+
+## Sheetcode
+| Command                    | Action         |
+| -------------------------- | -------------- |
+| pipenv shell               | activate env   |
+| python manage.py runserver | run the server |
+
+## Update Python & get _pipenv_
 ```bash
 # Update APT & upgrade Python3
 sudo apt update
@@ -12,14 +18,12 @@ sudo apt upgrade python3
 # Install pip3 + pipenv
 sudo apt install python3-pip
 pip3 install pipenv
-```
-> If a warning appears about scripts in '/home/<usr>/.local/bin'
-> not being in PATH, add it with  
-> `export PATH="$HOME/.local/bin:$PATH"`  
-> plus the following to activate it  
-> `source ~/.bashrc`  or ~/.bash_profile or ~/.zshrc, depending on your file
-> 
 
+# If "warning: scripts in '/home/<usr>/.local/bin' not in PATH",
+#   add it with `export PATH="$HOME/.local/bin:$PATH"`  
+#   and activate it
+# `source ~/.bashrc` (bzw, ~/.bash_profile or ~/.zshrc — depending on your file)
+```
 
 ## Getting started with Django
 ### 1. Create a Project called setup.
@@ -65,9 +69,7 @@ python manage.py createsuperuser
 ```
 
 ### 2. Adjust integrated terminal in VS Code to the right venv interpreter
-- After activating the venv with `pipenv shell`, run `pipenv --venv`.
-- Copy the path, add "/bin/python" and 
-- Insert it as the new interperter in VS Code (ctrl+P, "> Python: Select interpreter")
+- Activate the venv with `pipenv shell`; run `pipenv --venv`; copy the path, adding "/bin/python" to it; insert it all as the new interperter in VS Code (ctrl+P, "> Python: Select interpreter")
 - Now, `python manage.py runserver` should run the server.
 
 > if it returns a SyntaxError "File "manage.py", line 17 ) from exec",  
@@ -108,7 +110,7 @@ View are functions or classes responsible for processing the user's request when
 
 Effectively, views are request handlers (ie they handle the "request -> response" flow). Some frameworks call it "action".
 
-1. Views are written in the Apps' views.py;
+1. Views are written in the Apps' views.py;  
 ```python
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -209,12 +211,17 @@ INTERNAL_IPS = [
 The toolbar only appears if a html document is being served. Within the toolbar, the SQL panel shows the queries called in the database. When querying the database using Djangos querying relational mapper, it generates queries and send to the database (here the generated queries can be seen).
 
 ### 8. Models (Database tables)
-Class-based representations of our database table and are in the core of how we design the database. It inherits from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m.
+Class-based representations of our database table and are in the core of how we design the database. It inherits from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m. You can use an optional first positional argument to a Field to designate a human-readable name. 
 ```python
+class Product(models.Model):
+    product_id = models.UUIDField()
+
 class Project(models.Model):
-    title = models.charField()
+    title = models.charField(max_length=255)
     description = models.TextField()
-    id = models.UUIDField()
+    uuid = models.UUIDField()
+    pub_date = models.DateTimeField("date published")
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
 ```
 
 ### 9. Other functionalities in Django
@@ -293,12 +300,8 @@ Highly-related entities are kept together, maintaining the apps self-contained a
     - TaggesItem
 
 
-Procedures to set PostgreSQL-Django
-get a PostgreSQL server online
-permit connections in postgres' directory `data/postgresql.conf` file. Allow the addresses in `listen_addresses = '*'`
-allow it also in `pg_hba.conf` by making `host all all 0.0.0.0/0 md5`.  
-Moreover, .pg_pass must be in the django root folder, same directory where apps and projects are. The service `my_service` must be in the home directory.
-In WSL, to install postgresql with postgis:
+## PostgreSQL DB setup
+### To install PostgreSQL with PostGIS in WSL
 ```shell
 sudo apt update
 sudo apt install postgresql postgresql-contrib postgis
@@ -311,7 +314,26 @@ sudo systemctl start postgresql
 #      sudo service postgresql start/stop/restart
 ```
 
-After the database is set. When you run "python manage.py migrate", all necessary tables for the INSTALLED_APPS will be created.
+### Adjust PostgreSQL
+Get a PostgreSQL server online; Adjust `data/postgresql.conf` in PostgreSQL dir to permit connections by setting in `listen_addresses = '*'`; Ensure it is also permitted in `pg_hba.conf` by setting in `host all all 0.0.0.0/0 md5`. Create there a database (eg db_w_postgis) with superuser django.
+### Adjust Django
+Keep **.pg_pass** in the Django project root, where apps and projects are. Keep .**pg_service.conf** in **home dir**.
+```conf
+#.pg_pass
+[my_service]
+host=localhost
+user=django
+dbname=db_w_postgis
+
+# ".pg_service.conf" must be as "hostname:port:database:username:password"
+localhost:5432:db_w_postgis:django:django
+```
+Once the DB is set, 
+- Adjust your app's **models.py**;
+- Run `python manage.py makemigrations <app>` for each invididual app to create and store each individual app. (this commit to Django's version control)  
+_To check the migration SQL, type `python manage.py sqlmigrate <app> <migration_id>` — the migration id of `app/migrations/0001_initial.py` is `0001`._
+- Run `python manage.py migrate` to create all necessary tables defined in each respective **models.py** of the **INSTALLED_APPS** declared in **settings.py**.  
 
 
-After defining tables in models.py and adding the app to installed_apps, the 1st step  is to tell Django changed where made to the models app and they should be stored as a _migration_: `python manage.py makemigrations <app>`. To check what SQL that migration would run, type `python manage.py sqlmigrate <app> <migration_id>`. The migration id of `app/migrations/0001_initial.py` is `0001`. Execute the migration with `python manage.py migrate`.
+### Investigate 
+`python manage.py shell`
