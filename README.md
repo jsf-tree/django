@@ -211,7 +211,7 @@ INTERNAL_IPS = [
 The toolbar only appears if a html document is being served. Within the toolbar, the SQL panel shows the queries called in the database. When querying the database using Djangos querying relational mapper, it generates queries and send to the database (here the generated queries can be seen).
 
 ### 8. Models (Database tables)
-Class-based representations of our database table and are in the core of how we design the database. It inherits from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m. You can use an optional first positional argument to a Field to designate a human-readable name. 
+They are class-based representations of our database table and constitute the core of database design in Django. They inherit from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m. You can use an optional first positional argument to a Field to designate a human-readable name. 
 
 It’s important to add __str__() methods to your models, not only for your own convenience when dealing with the interactive prompt, but also because objects’ representations are used throughout Django’s automatically-generated admin.
 
@@ -338,9 +338,7 @@ _To check the migration SQL, type `python manage.py sqlmigrate <app> <migration_
 - Run `python manage.py migrate` to create all necessary tables defined in each respective **models.py** of the **INSTALLED_APPS** declared in **settings.py**.  
 
 
-### Investigate - Playing with the API
-`python manage.py shell` activates python with the **settings.py**. Table-classes can be imported from models and instantiated. Their method `.save()` must be called to add it to the database.
-from polls.models import Choice, Question
-from django.utils import timezone
-timezone.now() # brings up the UTC time
-timezone.localtime() # brungs up the local time
+### The Database API
+`python manage.py shell` activates python with the **settings.py**. Table-classes can be imported from models and instantiated. Their method `.save()` must be called to add it to the database. All registers in a table can be called via `<class>.objects.all()`. They can be filtered `<class>.objects.filter(an_attrib)`. Relationships are further available depending on the attribute type (eg string accepts `<str_attrib__endswith>=text, <str_attrib__startswith>=text`; datetime accepts `<dt_attrib__year>=a_year`; FK relationship attributes accept `<FJ>__attrib`.. This works as many levels deep as you want. There's no limit.
+
+### Django Admin
