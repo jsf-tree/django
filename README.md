@@ -1,5 +1,5 @@
 # Django
-A popular Python framework for backend webdev ([documentation](https://docs.djangoproject.com/)), nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
+A popular Python framework for backend webdev ([doc](https://docs.djangoproject.com/)), nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
 
 Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies. 
 
@@ -212,6 +212,9 @@ The toolbar only appears if a html document is being served. Within the toolbar,
 
 ### 8. Models (Database tables)
 Class-based representations of our database table and are in the core of how we design the database. It inherits from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m. You can use an optional first positional argument to a Field to designate a human-readable name. 
+
+It’s important to add __str__() methods to your models, not only for your own convenience when dealing with the interactive prompt, but also because objects’ representations are used throughout Django’s automatically-generated admin.
+
 ```python
 class Product(models.Model):
     product_id = models.UUIDField()
@@ -335,5 +338,9 @@ _To check the migration SQL, type `python manage.py sqlmigrate <app> <migration_
 - Run `python manage.py migrate` to create all necessary tables defined in each respective **models.py** of the **INSTALLED_APPS** declared in **settings.py**.  
 
 
-### Investigate 
-`python manage.py shell`
+### Investigate - Playing with the API
+`python manage.py shell` activates python with the **settings.py**. Table-classes can be imported from models and instantiated. Their method `.save()` must be called to add it to the database.
+from polls.models import Choice, Question
+from django.utils import timezone
+timezone.now() # brings up the UTC time
+timezone.localtime() # brungs up the local time
