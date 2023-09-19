@@ -342,3 +342,6 @@ _To check the migration SQL, type `python manage.py sqlmigrate <app> <migration_
 `python manage.py shell` activates python with the **settings.py**. Table-classes can be imported from models and instantiated. Their method `.save()` must be called to add it to the database. All registers in a table can be called via `<class>.objects.all()`. They can be filtered `<class>.objects.filter(an_attrib)`. Relationships are further available depending on the attribute type (eg string accepts `<str_attrib__endswith>=text, <str_attrib__startswith>=text`; datetime accepts `<dt_attrib__year>=a_year`; FK relationship attributes accept `<FJ>__attrib`.. This works as many levels deep as you want. There's no limit.
 
 ### Django Admin
+newsroom, unified interface for site administrators to edit content, admin isnt intended to be used by site visitors.
+
+An admin user must exist (if it does not, `python manage.py createsuperuser`). Run the server (`python manage.py runserver`) and log in **http://127.0.0.1:8000/admin/**.
