@@ -1,8 +1,12 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.urls import reverse
 
 # For 404 errors
 from django.http import Http404
+
+# To avoid racing conditions
+from django.db.models import F
 
 # Django provides shortcuts for very common idiom like:
 #  render - load a template, fill a context and return an HttpResponse object with the result of the rendered template
@@ -12,7 +16,7 @@ from django.shortcuts import get_object_or_404, render
 
 
 
-from .models import Question
+from .models import Question, Choice
 
 
 def index(request):
@@ -24,7 +28,9 @@ def index(request):
     #return HttpResponse(template.render(context, request))
 
     # --- Shortcut way --- #
-    return render(request, "polls/index.html", context)
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    context = {"latest_question_list": latest_question_list}
+    return render(request, "polls/index.html", context)   # polls/index.html is namespaces (inside templates, there is a folder with the app_name)
 
 
 def detail(request, question_id):
@@ -42,13 +48,34 @@ def detail(request, question_id):
     # --- Shortcut way --- #
     #  More than a shortcut, aligned with Django's loose coupling philosophy
     question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/detail.html", {"question": question})
+    context = {"question": question}
+    return render(request, "polls/detail.html", context)
 
 
 def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
-
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, "polls/results.html", {"question": question})
 
 def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(
+            request,
+            "polls/detail.html",
+            {
+                "question": question,
+                "error_message": "You didn't select a choice.",
+            },
+        )
+    else:
+        # F() runs a SQL to avoid racing conditions between simultanesouly user requests
+        selected_choice.votes = F('votes') + 1  
+        selected_choice.save()
+        selected_choice.refresh_from_db()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))

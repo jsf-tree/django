@@ -40,15 +40,7 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### 2. Adjust integrated terminal in VS Code to the right venv interpreter
-- Activate the venv with `pipenv shell`; run `pipenv --venv`; copy the path, adding "/bin/python" to it; insert it all as the new interperter in VS Code (ctrl+P, "> Python: Select interpreter")
-- Now, `python manage.py runserver` should run the server.
-
-> if it returns a SyntaxError "File "manage.py", line 17 ) from exec",  
-this happens every now and then when VS Code fails to activate the venv for this project;  
- all you have to do is open a new terminal window
-
-### 3. Create first App
+### 2. Create an App
 Every Django Project is a collection of several apps, each app providing a certain functionality. 
 In `settings.py` module, the INSTALLED_APPS keeps the registered apps.
 Here are the default apps:
@@ -76,20 +68,16 @@ This creates a folder (every Django app has the exact same structure):
 
 > Every new app must be registered in the setup settings modules, in the list of INSTALLED_APPS
 
-### 4. Writing [Views](https://docs.djangoproject.com/en/4.2/intro/tutorial03/)
-Views are the public interface.
+### 3. [Views](https://docs.djangoproject.com/en/4.2/intro/tutorial03/), the public interface
+Every data exchange involves a request and a response, which is achieved by protocols like HTTP. Views are the public interface, providing handlers (in the form of **functions** or **classes**) that connect user's requests coming through the endpoints in **urls.py** and perform actions like serving a html (**templates.py**) or interacting with the database (**models.py**). Effectively, views are request handlers (ie they handle the "request -> response" flow). Some frameworks call it an "action".
 
-> Angle brackets “captures” part of the URL and sends it as a keyword argument to the view function. In `hello/<str:name>`, the part after "/" will get converted to "str" and stored to a var called "name", which will be used as a keyword in the view method.
+> Angle brackets “captures” part of the URL and sends it as a keyword argument to the view function. In `hello/<str:name>`, the part after "/" will get converted to "str" and stored to a var called "name", which will be used as a keyword in the view method.  
 
-Every data exchange involves a request and a response, which is achieved by protocols like HTTP.
-View are functions or classes responsible for processing the user's request when they visit a certain URL/endpoint on the website.
-
-Effectively, views are request handlers (ie they handle the "request -> response" flow). Some frameworks call it "action".
-
-1. Views are written in the Apps' views.py;  
+- **Views** stay under the respective app's **views.py**:
 ```python
 from django.shortcuts import render
 from django.http import HttpResponse
+
 
 # Function-based view
 def say_hello(request, name=''):
@@ -99,47 +87,49 @@ def say_hello(request, name=''):
 class ProfileView(View):
     def get(self, request):
         user = getUser()
-        return render(request, 'profile.html', {'user':user})
+        # "<app_name>/" is how you can namespace your templates
+        return render(request, '<app_name>/profile.html', {'user':user})
     def post(self, request):
         pass
 ```
-2. Route the Apps' request handlers to the URLs (URL routing). One way is by creating a module "urls.py" in the Apps' dir;
+- **URL routing** can be kept under the respective app's dir by creating **urls.py**:
 ```python
 from django.urls import path
 from . import views
 
+
+# add name(space) for loose coupling
 urlpatterns = [
-    path('hello/', views.say_hello),
+    path('hello/', views.say_hello, name='without_name'),
     path('hello/<str:name>', views.say_hello, name='with_name'),
 ]
 ```
 
-3. Register the Apps' "urls.py" modules in the main project's "urls.py";
+- Include each app **urls.py** in the projects's **urls.py** register:
 ```python
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('myfirstapp/', include('myfirstapp.urls')),
+    path('<app_name>/', include('<app_name>.urls')),
 ]
 ```
 
 Run the server `python manage.py runserver <port-number>` and try to call the view `http://127.0.0.1:8000/myfirstapp/hello`.
 
 
-### 5. [Templates](https://docs.djangoproject.com/en/4.2/topics/templates/)
-Often called `view` in other frameworks, it is called a `template` in Django. 
-Default templates are not used so often in Django projects these days.
-There are special cases for them, but Django is mostly used to build APIs that return data, not html content. At any rate, this is an example of making a template:
-1. create a new folder in app dir called `templates/<app_name>/` (template namespacing guarantees Django will pick the .html from the respective app. Without namespacing, if two apps have different htmls with the same name, Django will always serve the first)
-2. inside it, create a `hello.html` (the syntax is ugly, but modular):
+### 5. [Templates](https://docs.djangoproject.com/en/4.2/topics/templates/), the html
+**Templates** are html files kept under the app's dir, like `<app_dir>/templates/<app_name>/index.html`.  
+_Best Practice: the subfolder **app_name** namespaces the app templates and guarantees correctly  routing when the Project group all the app's template together._
+
+The example of a template below shows the modular syntax:
 ```html
 <!-- this is only an example, for serious projects write full html docs-->
 {% if name %}
-<h1>Hello, {{ name }}!</h1>
+    <h1>Hello, {{ name }}!</h1>
 {% else %}
-<h1>Hello, World!</h1>
+    <h1>Hello, World!</h1>
 {% endif %}
 ```
 3. in views, add the request handler:
@@ -163,32 +153,7 @@ A solid understanding of the Django template language for html is useful:
 </ul>    
 ```
 
-
-### 6. Debugging Django applications in VS Code
-On the left panel, click on `Run and Debug` (Ctrl+Shift+D).  
-Click on `create a launch.json file`, select Django.  
-Set the key-value pairs accordingly.  
-In configurations.args, one can add "9000" to void clash with the port 8000 where server is usually on for instance.  
-
-The VS Code debugger works pretty similar to other debugs (Breakpoints, Step Over, Step In, Step Out)
-
-### 7. Django Debug Toolbar
---> [Reference](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html) <--  
-Install it with `pipenv install django-debug-toolbar`  
-Add `debug_toolbar` in the list of installed apps in the settings module.  
-Add a new url entry to the `urlpatterns` in the main url module: `path('__debug__/', include(debug_toolbar.urls))` and add at the top `import debug_toolbar`.  
-Add the middle ware `"debug_toolbar.middleware.DebugToolbarMiddleware"` at the top of MIDDLEWARE also in the settings module.  
-Add the internal ip. For local development, also in the settings module, add:
-```python
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]
-```
-The toolbar only appears if a html document is being served. Within the toolbar, the SQL panel shows the queries called in the database. When querying the database using Djangos querying relational mapper, it generates queries and send to the database (here the generated queries can be seen).
-
-### 8. Models (Database tables)
+### 6. [Models](), the database tables
 They are class-based representations of our database table and constitute the core of database design in Django. They inherit from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m. You can use an optional first positional argument to a Field to designate a human-readable name. 
 
 It’s important to add __str__() methods to your models, not only for your own convenience when dealing with the interactive prompt, but also because objects’ representations are used throughout Django’s automatically-generated admin.
@@ -205,8 +170,34 @@ class Project(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
 ```
 
-### 9. Other functionalities in Django
-#### 9.1 Django ORM
+### 7. Debugging Django applications in VS Code
+On the left panel, click on `Run and Debug` (Ctrl+Shift+D).  
+Click on `create a launch.json file`, select Django.  
+Set the key-value pairs accordingly.  
+In configurations.args, one can add "9000" to void clash with the port 8000 where server is usually on for instance.  
+
+The VS Code debugger works pretty similar to other debugs (Breakpoints, Step Over, Step In, Step Out)
+
+### 7+. Django Debug Toolbar
+--> [Reference](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html) <--  
+Install it with `pipenv install django-debug-toolbar`  
+Add `debug_toolbar` in the list of installed apps in the settings module.  
+Add a new url entry to the `urlpatterns` in the main url module: `path('__debug__/', include(debug_toolbar.urls))` and add at the top `import debug_toolbar`.  
+Add the middle ware `"debug_toolbar.middleware.DebugToolbarMiddleware"` at the top of MIDDLEWARE also in the settings module.  
+Add the internal ip. For local development, also in the settings module, add:
+```python
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
+```
+The toolbar only appears if a html document is being served. Within the toolbar, the SQL panel shows the queries called in the database. When querying the database using Djangos querying relational mapper, it generates queries and send to the database (here the generated queries can be seen).
+
+
+
+### 8. Other functionalities in Django
+#### 8.1 Django ORM
 Django has a builtin ORM that helps working with the database. Here are a few the methods to retrieve data from the database via ORM:
 ```python
 item = ModelName.objects.get(id=1)
@@ -214,13 +205,13 @@ querySet = ModelName.objects.all
 quertSet = ModelName.objects.filter()
 ```
 
-#### 9.2 Admin Panel
+#### 8.2 Admin Panel
 Quick start interface to work with our data. But a personal panel can be made.
 
-#### 9.3 CRUD Methods (Copy, Read, Update, Delete)
+#### 8.3 CRUD Methods (Copy, Read, Update, Delete)
 While one can use the Admin Panel for it, a customized html page can also be made. Using methods like save() and delete(). Also, one can use Django Model Forms and/or Class-based views to handle these functionalities.
 
-#### 9.4 [Static files](https://youtu.be/0sMtoedWaf0?t=297)
+#### 8.4 [Static files](https://youtu.be/0sMtoedWaf0?t=297)
 These are .css, .js and images that are part of the application. One must declare the STATIC_ROOT, MEDIA_ROOT in the settings module.
 ```
 static/styles       
@@ -228,13 +219,13 @@ static/js
 static/images       
 ```
 
-#### 9.5 [Authentication](https://youtu.be/0sMtoedWaf0?t=302)
+#### 8.5 [Authentication](https://youtu.be/0sMtoedWaf0?t=302)
 Django offers builtin
 
-#### 9.6 [Signals](https://youtu.be/0sMtoedWaf0?t=360)
+#### 8.6 [Signals](https://youtu.be/0sMtoedWaf0?t=360)
 Django offers ways to add event listeners that fire-off actions every time the event occurs. For instance, send an e-mail when a new user registers in the website.
 
-### 10. Organizing Models in Apps
+### 9. Organizing Models in Apps
 A Django project contains one or more apps; each app provides a specific piece of functionality.
 
 #### Bad Example - Monolith
@@ -325,7 +316,8 @@ newsroom, unified interface for site administrators to edit content, admin isnt 
 An admin user must exist (if it does not, `python manage.py createsuperuser` — mine is "admin:senhasenha"). Run the server (`python manage.py runserver`) and log in **http://127.0.0.1:8000/admin/**.
 
 
-#### Update Python & get **pipenv**
+#### [OPTIONAL] 
+Update Python & get **pipenv**
 ```bash
 # Update APT & upgrade Python3
 sudo apt update
@@ -347,3 +339,10 @@ pipenv install django psycopg2-binary django-debug-toolbar
 # Activate the virtual environment
 pipenv shell
 ```
+Adjust integrated terminal in VS Code to the right venv interpreter
+- Activate the venv with `pipenv shell`; run `pipenv --venv`; copy the path, adding "/bin/python" to it; insert it all as the new interperter in VS Code (ctrl+P, "> Python: Select interpreter")
+- Now, `python manage.py runserver` should run the server.
+
+> if it returns a SyntaxError "File "manage.py", line 17 ) from exec",  
+this happens every now and then when VS Code fails to activate the venv for this project;  
+ all you have to do is open a new terminal window
