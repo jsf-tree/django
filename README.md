@@ -80,14 +80,14 @@ this happens every now and then when VS Code fails to activate the venv for this
 Every Django Project is a collection of several apps, each app providing a certain functionality. 
 In `settings.py` module, the INSTALLED_APPS keeps the registered apps.
 Here are the default apps:
-| Default installed apps      | Usage                                                                             |
-|-----------------------------|-----------------------------------------------------------------------------------|
-| django.contrib.admin        | admin interface for managing our data                                             |
-| django.contrib.auth         | authenticate users                                                                |
-| django.contrib.contenttypes | ...                                                                               | 
-| django.contrib.sessions     | legacy (not used anymore) temporary memory on the server for managing user's data |
-| django.contrib.messages     | display one-time notifications to the user                                        |
-| django.contrib.staticfiles  | serving static files to the user (images, css, etc)                               |
+| Default installed apps      | Usage                                                   |
+|-----------------------------|---------------------------------------------------------|
+| django.contrib.admin        | admin interface for managing our data                   |
+| django.contrib.auth         | authenticate users                                      |
+| django.contrib.contenttypes | ...                                                     | 
+| django.contrib.sessions     | temporary memory on the server for managing user's data |
+| django.contrib.messages     | display one-time notifications to the user              |
+| django.contrib.staticfiles  | serving static files to the user (images, css, etc)     |
 
 To create the first app, open a new terminal, cd to where the "venv shell" is set 
 (ie. where "Pipfile and Pipfile.lock" are), 
@@ -344,4 +344,4 @@ _To check the migration SQL, type `python manage.py sqlmigrate <app> <migration_
 ### Django Admin
 newsroom, unified interface for site administrators to edit content, admin isnt intended to be used by site visitors.
 
-An admin user must exist (if it does not, `python manage.py createsuperuser`). Run the server (`python manage.py runserver`) and log in **http://127.0.0.1:8000/admin/**.
+An admin user must exist (if it does not, `python manage.py createsuperuser` — mine is "admin:senhasenha"). Run the server (`python manage.py runserver`) and log in **http://127.0.0.1:8000/admin/**.

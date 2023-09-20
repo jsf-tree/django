@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+71j_ksg*tthain!txl4+li4#e$_-*16to^vjj4wmc(#8j0in0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # 🌳 Set to False to see 404 debug
+DEBUG = True # 🌳 Set to False to see 404 debug
 
 ALLOWED_HOSTS = ['*']  # 🌳 changed [] to ['*']
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.admin', # 🌳 The Admin site
     'django.contrib.auth', # 🌳 An authentication system
     'django.contrib.contenttypes', # 🌳 A framework for content types
-    #'django.contrib.sessions', # 🌳 Legacy - a session framework
+    'django.contrib.sessions', # 🌳 Legacy - a session framework
     'django.contrib.messages', # 🌳 A messaging framework
     'django.contrib.staticfiles', # 🌳 A framework for managing static files
 ]
@@ -119,7 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# 🌳 I set the LANGUAGE_CODE to "de-de" to check the internalization (which abbreviation is "i18n" — funny, i<18 characters>n haha) but then changed it back
+#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de-de' 
 
 # 🌳 I set the TIME_ZONE to my time zone
 # TIME_ZONE = 'UTC'
