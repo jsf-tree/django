@@ -26,14 +26,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.1893044"
-     inkscape:cx="248.46456"
+     inkscape:cx="246.78291"
      inkscape:cy="288.40388"
      inkscape:window-width="1680"
      inkscape:window-height="979"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer2" />
   <defs
      id="defs2">
     <rect
@@ -422,6 +422,19 @@
        id="rect22478" />
   </defs>
   <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Hintergrund">
+    <rect
+       style="fill:#ffffff;stroke:#454545;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:0.3, 0.899999"
+       id="rect4127"
+       width="160.17767"
+       height="119.46585"
+       x="-0.66740692"
+       y="0.44493794"
+       sodipodi:insensitive="true" />
+  </g>
+  <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1">
@@ -563,15 +576,15 @@
        style="font-size:21.3333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect2562);display:inline;fill:#ffffff;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="404.07739"
-         id="tspan2496"><tspan
+         id="tspan4474"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Ebrima Bold';stroke:none"
-           id="tspan2494">Django
+           id="tspan4472">Django
 </tspan></tspan><tspan
          x="350.20508"
          y="431.01697"
-         id="tspan2500"><tspan
+         id="tspan4478"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Ebrima Bold';stroke:none"
-           id="tspan2498">Project</tspan></tspan></text>
+           id="tspan4476">Project</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.22805751,-0.13414214,0.13414214,0.22805751,-73.99628,6.8136582)"
@@ -579,9 +592,9 @@
        style="font-size:10.6667px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect4124);display:inline;fill:#ffffff;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="394.46941"
-         id="tspan2504"><tspan
+         id="tspan4482"><tspan
            style="stroke:none"
-           id="tspan2502">InstalledApps</tspan></tspan></text>
+           id="tspan4480">InstalledApps</tspan></tspan></text>
     <path
        style="fill:#8086ff;fill-opacity:1;stroke:none;stroke-width:0.805062;stroke-linecap:round;stroke-linejoin:round"
        d="M 130.48506,50.49779 V 40.106501 l -17.14563,3.247277 v 10.391291 z"
@@ -601,9 +614,9 @@
        style="font-size:16px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect4569);display:inline;fill:#ffffff;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="399.2734"
-         id="tspan2508"><tspan
+         id="tspan4486"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Ebrima Bold';stroke:none"
-           id="tspan2506">App1</tspan></tspan></text>
+           id="tspan4484">App1</tspan></tspan></text>
     <path
        style="fill:#d3d3d3;fill-opacity:1;stroke:#8c8c5b;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 110.71789,45.202497 v 4.29766 l -4.40932,-2.541131 v -4.29767 z"
@@ -715,9 +728,9 @@
        style="font-size:16px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect5888);display:inline;fill:#ffffff;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="399.2734"
-         id="tspan2512"><tspan
+         id="tspan4490"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Ebrima Bold';stroke:none"
-           id="tspan2510">App2</tspan></tspan></text>
+           id="tspan4488">App2</tspan></tspan></text>
     <path
        style="fill:#d3d3d3;fill-opacity:1;stroke:#8c8c5b;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 101.12202,68.657959 v 4.29766 l -4.409298,-2.54113 v -4.29767 z"
@@ -817,9 +830,9 @@
        style="font-size:18.6667px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect7711);display:inline;fill:#ffffff;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="401.67544"
-         id="tspan2516"><tspan
+         id="tspan4494"><tspan
            style="fill:#000000;stroke:none"
-           id="tspan2514">Database</tspan></tspan></text>
+           id="tspan4492">Database</tspan></tspan></text>
     <path
        style="fill:#ff6600;fill-opacity:1;stroke:none;stroke-width:0.837209;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        d="m 97.728245,69.780129 v 1.58119 l -1.371293,-0.79026 v -1.55879 z"
@@ -1054,9 +1067,9 @@
        style="font-size:10.6667px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect7911);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="394.46941"
-         id="tspan2520"><tspan
+         id="tspan4498"><tspan
            style="stroke:none"
-           id="tspan2518">settings.py</tspan></tspan></text>
+           id="tspan4496">settings.py</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26455223,-0.00405667,0.00405667,0.26455223,79.958341,26.249345)"
@@ -1220,9 +1233,9 @@
        style="font-size:8px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect9703);display:inline;fill:#ffffff;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="392.06736"
-         id="tspan2524"><tspan
+         id="tspan4502"><tspan
            style="fill:#000000;stroke:none"
-           id="tspan2522">migrations</tspan></tspan></text>
+           id="tspan4500">migrations</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26455223,-0.00405667,0.00405667,0.26455223,-24.395921,11.499977)"
@@ -1230,9 +1243,9 @@
        style="font-size:8px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect10614);display:inline;fill:#ffffff;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="392.06736"
-         id="tspan2528"><tspan
+         id="tspan4506"><tspan
            style="fill:#000000;stroke:none"
-           id="tspan2526">version control</tspan></tspan></text>
+           id="tspan4504">version control</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="scale(0.26458333)"
@@ -1245,7 +1258,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;font-family:Consolas;-inkscape-font-specification:Consolas;white-space:pre;shape-inside:url(#rect14712);display:inline;fill:#00ee06;fill-opacity:1;stroke:none;stroke-width:0.377953;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="730.11328"
          y="194.61719"
-         id="tspan2530">$python manage.py startapp &lt;app-name&gt;</tspan></text>
+         id="tspan4508">$python manage.py startapp &lt;app-name&gt;</tspan></text>
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#499e5c;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect14818"
@@ -1260,7 +1273,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;font-family:Consolas;-inkscape-font-specification:Consolas;white-space:pre;shape-inside:url(#rect14824);display:inline;fill:#00ee06;fill-opacity:1;stroke:none;stroke-width:0.377953;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="730.11328"
          y="194.61719"
-         id="tspan2532">$django-admin startproject &lt;project_name&gt;</tspan></text>
+         id="tspan4510">$django-admin startproject &lt;project_name&gt;</tspan></text>
     <path
        style="fill:#00ee06;fill-opacity:1;stroke:#000300;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart)"
        d="m 42.979462,18.682699 v 4.181276"
@@ -1273,9 +1286,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect9802);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2536"><tspan
+         id="tspan4514"><tspan
            style="stroke:none"
-           id="tspan2534">boilerplate</tspan></tspan></text>
+           id="tspan4512">boilerplate</tspan></tspan></text>
     <path
        style="fill:#00ee06;fill-opacity:1;stroke:#000300;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 118.50425,15.018386 v 4.181275"
@@ -1293,9 +1306,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect12382);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2540"><tspan
+         id="tspan4518"><tspan
            style="stroke:none"
-           id="tspan2538">admin
+           id="tspan4516">admin
 </tspan></tspan></text>
     <text
        xml:space="preserve"
@@ -1304,9 +1317,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect14866);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2544"><tspan
+         id="tspan4522"><tspan
            style="stroke:none"
-           id="tspan2542">apps</tspan></tspan></text>
+           id="tspan4520">apps</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.23322385,0.12494387,-0.12494387,0.23322385,82.859972,-96.020842)"
@@ -1314,9 +1327,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect14878);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2548"><tspan
+         id="tspan4526"><tspan
            style="stroke:none"
-           id="tspan2546">models</tspan></tspan></text>
+           id="tspan4524">models</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.23322385,0.12494387,-0.12494387,0.23322385,86.308242,-96.577014)"
@@ -1324,9 +1337,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect14890);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2552"><tspan
+         id="tspan4530"><tspan
            style="stroke:none"
-           id="tspan2550">tests</tspan></tspan></text>
+           id="tspan4528">tests</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.23322385,0.12494387,-0.12494387,0.23322385,89.200342,-97.300038)"
@@ -1334,9 +1347,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect14902);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2556"><tspan
+         id="tspan4534"><tspan
            style="stroke:none"
-           id="tspan2554">views</tspan></tspan></text>
+           id="tspan4532">views</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.23322385,0.12494387,-0.12494387,0.23322385,75.407262,-94.85288)"
@@ -1344,9 +1357,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect14914);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2560"><tspan
+         id="tspan4538"><tspan
            style="stroke:none"
-           id="tspan2558">admin
+           id="tspan4536">admin
 </tspan></tspan></text>
     <text
        xml:space="preserve"
@@ -1355,9 +1368,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect18941);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2564"><tspan
+         id="tspan4542"><tspan
            style="stroke:none"
-           id="tspan2562">urls</tspan></tspan></text>
+           id="tspan4540">urls</tspan></tspan></text>
     <path
        style="fill:#00ee06;fill-opacity:1;stroke:#000300;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart)"
        d="M 143.87938,44.087112 129.0923,37.620041"
@@ -1377,12 +1390,12 @@
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-93.068696,-42.931225)"
        id="text19826"
-       style="font-size:5.33333px;font-family:Consolas;-inkscape-font-specification:Consolas;white-space:pre;shape-inside:url(#rect19828);opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
+       style="font-size:5.33333px;font-family:Consolas;-inkscape-font-specification:Consolas;white-space:pre;shape-inside:url(#rect19828);display:inline;opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="899.47461"
          y="333.8112"
-         id="tspan2568"><tspan
+         id="tspan4546"><tspan
            style="fill:#000000"
-           id="tspan2566">Usuário</tspan></tspan></text>
+           id="tspan4544">Usuário</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.23322385,0.12494387,-0.12494387,0.23322385,98.167922,-86.679157)"
@@ -1390,9 +1403,9 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect22258);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2572"><tspan
+         id="tspan4550"><tspan
            style="stroke:none"
-           id="tspan2570">templates</tspan></tspan></text>
+           id="tspan4548">templates</tspan></tspan></text>
     <path
        style="fill:none;fill-opacity:1;stroke:#454545;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:0.3, 0.9;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
        d="m 124.20424,39.447618 c -0.13733,2.782173 5.00183,3.741545 6.64647,6.649537"
@@ -1410,20 +1423,20 @@
        style="font-size:5.33333px;font-family:Ebrima;-inkscape-font-specification:Ebrima;white-space:pre;shape-inside:url(#rect22478);display:inline;fill:#020202;fill-opacity:1;stroke:#8c8c5b;stroke-width:2.83465;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="350.20508"
          y="389.66535"
-         id="tspan2576"><tspan
+         id="tspan4554"><tspan
            style="stroke:none"
-           id="tspan2574">to avoid
+           id="tspan4552">to avoid
 </tspan></tspan><tspan
          x="350.20508"
          y="396.33201"
-         id="tspan2580"><tspan
+         id="tspan4558"><tspan
            style="stroke:none"
-           id="tspan2578">hardcoding
+           id="tspan4556">hardcoding
 </tspan></tspan><tspan
          x="350.20508"
          y="402.99866"
-         id="tspan2584"><tspan
+         id="tspan4562"><tspan
            style="stroke:none"
-           id="tspan2582">html in Python</tspan></tspan></text>
+           id="tspan4560">html in Python</tspan></tspan></text>
   </g>
 </svg>
