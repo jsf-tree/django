@@ -1,44 +1,18 @@
-# Django
-A popular Python framework for backend webdev ([doc](https://docs.djangoproject.com/)), nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
+# [Django](https://docs.djangoproject.com/)
+A popular Python framework for backend webdev, nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
 Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies; [Django Oficial Tutorial](https://docs.djangoproject.com/en/4.2/intro/).
 
-#### Sheetcode
-| Command                    | Action         |
-| -------------------------- | -------------- |
-| pipenv shell               | activate env   |
-| python manage.py runserver | run the server |
+To start the server: `pipenv shell` and `python manage.py runserver <port-number>`  
+_Scroll to the end for pipenv and django installation_
 
+### Loose coupling philosophy
+Django uses a main project (often named after setup or mysite) and several apps that plug to the project. This framework's philosophy follows loose coupling, meaning it provides ways to use an app in another projects. Because of this, each file has a clear responsibility.
 
-## Getting started with Django
-#### Update Python & get _pipenv_
-```bash
-# Update APT & upgrade Python3
-sudo apt update
-sudo apt upgrade python3
+![image](/img.svg "Flowchart")
 
-# Install pip3 + pipenv
-sudo apt install python3-pip
-pip3 install pipenv
+### 1. Create a Project
+`django-admin startproject setup .` creates a project called setup in the current directory with the **manage.py** (a wrapper¹ around `django-admin` that takes settings.py into account) and the default project folder with
 
-# If "warning: scripts in '/home/<usr>/.local/bin' not in PATH",
-#   add it with `export PATH="$HOME/.local/bin:$PATH"`  
-#   and activate it
-# `source ~/.bashrc` (bzw, ~/.bash_profile or ~/.zshrc — depending on your file)
-```
-
-### 1. Create a Project called setup.
-```bash
-# Install django and psycopg2¹ to the pipenv
-pipenv install django psycopg2-binary django-debug-toolbar
-#¹ normal psycopg2 continuously fail <https://github.com/pypa/pipenv/issues/3991>
-
-# Activate the virtual environment
-pipenv shell
-
-# Start project named "setup" in the current directory via django-admin
-django-admin startproject setup .
-```
-This creates the **manage.py** (a wrapper¹ around `django-admin` that takes settings.py into account) and a project folder named setup with the default files:
 | Default file     | Reponsibility                                                     |
 | ---------------- | ----------------------------------------------------------------- |
 | __init__.py      | defines this directory as a package                               |
@@ -46,8 +20,6 @@ This creates the **manage.py** (a wrapper¹ around `django-admin` that takes set
 | urls.py          | define urls of the application                                    |
 | wsgi and asgi.py | used for deployment                                               |
 
-¹For instance, while a `django-admin runserver` returns it lacks configurations; 
-`python manage.py runserver <port-number>` works out since it automatically uses the default configurations of settings.py.  
 When the server is run, it creates a `db.sqlite3` database if you have no database in your project.
 
 Five commonly used commands in Django are:
@@ -156,7 +128,7 @@ urlpatterns = [
 Run the server `python manage.py runserver <port-number>` and try to call the view `http://127.0.0.1:8000/myfirstapp/hello`.
 
 
-### 5. Using templates
+### 5. [Templates](https://docs.djangoproject.com/en/4.2/topics/templates/)
 Often called `view` in other frameworks, it is called a `template` in Django. 
 Default templates are not used so often in Django projects these days.
 There are special cases for them, but Django is mostly used to build APIs that return data, not html content. At any rate, this is an example of making a template:
@@ -351,3 +323,27 @@ _To check the migration SQL, type `python manage.py sqlmigrate <app> <migration_
 newsroom, unified interface for site administrators to edit content, admin isnt intended to be used by site visitors.
 
 An admin user must exist (if it does not, `python manage.py createsuperuser` — mine is "admin:senhasenha"). Run the server (`python manage.py runserver`) and log in **http://127.0.0.1:8000/admin/**.
+
+
+#### Update Python & get **pipenv**
+```bash
+# Update APT & upgrade Python3
+sudo apt update
+sudo apt upgrade python3
+
+# Install pip3 + pipenv
+sudo apt install python3-pip
+pip3 install pipenv
+
+# If "warning: scripts in '/home/<usr>/.local/bin' not in PATH",
+#   add it with `export PATH="$HOME/.local/bin:$PATH"`  
+#   and activate it
+# `source ~/.bashrc` (bzw, ~/.bash_profile or ~/.zshrc — depending on your file)
+
+# Install django and psycopg2¹ (to enable PostgreSQL connection) to the pipenv
+pipenv install django psycopg2-binary django-debug-toolbar
+#¹ normal psycopg2 continuously fail <https://github.com/pypa/pipenv/issues/3991>
+
+# Activate the virtual environment
+pipenv shell
+```

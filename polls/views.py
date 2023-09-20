@@ -29,6 +29,10 @@ def index(request):
 
 def detail(request, question_id):
     # --- More verbose way --- #
+    #  This introduces tight coupling between Views and Models.
+    #  In Django loose coupling philosophy, views should not directly
+    #  operate data (models). The method "get_object_or_404" is thus
+    #  preferred.
     #try:
     #    question = Question.objects.get(pk=question_id)
     #except Question.DoesNotExist:
@@ -36,6 +40,7 @@ def detail(request, question_id):
     #return render(request, "polls/detail.html", {"question": question})
 
     # --- Shortcut way --- #
+    #  More than a shortcut, aligned with Django's loose coupling philosophy
     question = get_object_or_404(Question, pk=question_id)
     return render(request, "polls/detail.html", {"question": question})
 
