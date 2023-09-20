@@ -62,11 +62,12 @@ INTERNAL_IPS = [
 
 ROOT_URLCONF = 'setup.urls'
 
+# 🌳 Describes how Django will load and render templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': True, # 🌳 True = This default setting makes Django to look for templates into each respective app dir called "templates"
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

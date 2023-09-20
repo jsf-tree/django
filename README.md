@@ -1,15 +1,16 @@
 # Django
 A popular Python framework for backend webdev ([doc](https://docs.djangoproject.com/)), nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
+Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies; [Django Oficial Tutorial](https://docs.djangoproject.com/en/4.2/intro/).
 
-Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies. 
-
-## Sheetcode
+#### Sheetcode
 | Command                    | Action         |
 | -------------------------- | -------------- |
 | pipenv shell               | activate env   |
 | python manage.py runserver | run the server |
 
-## Update Python & get _pipenv_
+
+## Getting started with Django
+#### Update Python & get _pipenv_
 ```bash
 # Update APT & upgrade Python3
 sudo apt update
@@ -25,7 +26,6 @@ pip3 install pipenv
 # `source ~/.bashrc` (bzw, ~/.bash_profile or ~/.zshrc — depending on your file)
 ```
 
-## Getting started with Django
 ### 1. Create a Project called setup.
 ```bash
 # Install django and psycopg2¹ to the pipenv
@@ -104,7 +104,11 @@ This creates a folder (every Django app has the exact same structure):
 
 > Every new app must be registered in the setup settings modules, in the list of INSTALLED_APPS
 
-### 4. Writing Views
+### 4. Writing [Views](https://docs.djangoproject.com/en/4.2/intro/tutorial03/)
+Views are the public interface.
+
+> Angle brackets “captures” part of the URL and sends it as a keyword argument to the view function. In `hello/<str:name>`, the part after "/" will get converted to "str" and stored to a var called "name", which will be used as a keyword in the view method.
+
 Every data exchange involves a request and a response, which is achieved by protocols like HTTP.
 View are functions or classes responsible for processing the user's request when they visit a certain URL/endpoint on the website.
 
@@ -116,8 +120,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 # Function-based view
-def say_hello(request):
-    return HttpResponse('Hello World')
+def say_hello(request, name=''):
+    return HttpResponse('Hello World %s' % name)
 
 # Class-based view
 class ProfileView(View):
@@ -134,6 +138,7 @@ from . import views
 
 urlpatterns = [
     path('hello/', views.say_hello),
+    path('hello/<str:name>', views.say_hello, name='with_name'),
 ]
 ```
 
@@ -155,9 +160,10 @@ Run the server `python manage.py runserver <port-number>` and try to call the vi
 Often called `view` in other frameworks, it is called a `template` in Django. 
 Default templates are not used so often in Django projects these days.
 There are special cases for them, but Django is mostly used to build APIs that return data, not html content. At any rate, this is an example of making a template:
-1. create a new folder in app dir called `templates/`
-2. in templates, create a `hello.html` (the syntax is ugly, but modular):
+1. create a new folder in app dir called `templates/<app_name>/` (template namespacing guarantees Django will pick the .html from the respective app. Without namespacing, if two apps have different htmls with the same name, Django will always serve the first)
+2. inside it, create a `hello.html` (the syntax is ugly, but modular):
 ```html
+<!-- this is only an example, for serious projects write full html docs-->
 {% if name %}
 <h1>Hello, {{ name }}!</h1>
 {% else %}
