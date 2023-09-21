@@ -1,6 +1,7 @@
 # [Django](https://docs.djangoproject.com/)
 A popular Python framework for backend webdev, nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
-Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies; [Django Oficial Tutorial](https://docs.djangoproject.com/en/4.2/intro/).
+Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies;  
+[Django Oficial Tutorial](https://docs.djangoproject.com/en/4.2/intro/): 2-[Models_dbAPI_AdminPage](https://docs.djangoproject.com/en/4.2/intro/tutorial02/), 3-[Views_Templates_Namespacing](https://docs.djangoproject.com/en/4.2/intro/tutorial03/), 4-[Forms_GenericViews](https://docs.djangoproject.com/en/4.2/intro/tutorial04/).
 
 To start the server: `pipenv shell` and `python manage.py runserver <port-number>`  
 _Scroll to the end for pipenv and django installation_
@@ -115,11 +116,11 @@ urlpatterns = [
     path('<app_name>/', include('<app_name>.urls')),
 ]
 ```
+#### 3+ [Generic Views](https://docs.djangoproject.com/en/4.2/intro/tutorial04/)
+**Generic views** abstract common patterns to the point where you don’t even need to write Python code to write an app.
 
-Run the server `python manage.py runserver <port-number>` and try to call the view `http://127.0.0.1:8000/myfirstapp/hello`.
 
-
-### 5. [Templates](https://docs.djangoproject.com/en/4.2/topics/templates/), the html
+### 4. [Templates](https://docs.djangoproject.com/en/4.2/topics/templates/), the html
 **Templates** are html files kept under the app's dir, like `<app_dir>/templates/<app_name>/index.html`.  
 _Best Practice: the subfolder **app_name** namespaces the app templates and guarantees correctly  routing when the Project group all the app's template together._
 
@@ -153,7 +154,7 @@ A solid understanding of the Django template language for html is useful:
 </ul>    
 ```
 
-### 6. [Models](), the database tables
+### 5. [Models](), the database tables
 They are class-based representations of our database table and constitute the core of database design in Django. They inherit from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m. You can use an optional first positional argument to a Field to designate a human-readable name. 
 
 It’s important to add __str__() methods to your models, not only for your own convenience when dealing with the interactive prompt, but also because objects’ representations are used throughout Django’s automatically-generated admin.
@@ -170,7 +171,7 @@ class Project(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
 ```
 
-### 7. Debugging Django applications in VS Code
+### 6. Debugging Django applications in VS Code
 On the left panel, click on `Run and Debug` (Ctrl+Shift+D).  
 Click on `create a launch.json file`, select Django.  
 Set the key-value pairs accordingly.  
@@ -178,7 +179,7 @@ In configurations.args, one can add "9000" to void clash with the port 8000 wher
 
 The VS Code debugger works pretty similar to other debugs (Breakpoints, Step Over, Step In, Step Out)
 
-### 7+. Django Debug Toolbar
+### 6+. Django Debug Toolbar
 --> [Reference](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html) <--  
 Install it with `pipenv install django-debug-toolbar`  
 Add `debug_toolbar` in the list of installed apps in the settings module.  
@@ -196,8 +197,8 @@ The toolbar only appears if a html document is being served. Within the toolbar,
 
 
 
-### 8. Other functionalities in Django
-#### 8.1 Django ORM
+### 7. Other functionalities in Django
+#### 7.1 Django ORM
 Django has a builtin ORM that helps working with the database. Here are a few the methods to retrieve data from the database via ORM:
 ```python
 item = ModelName.objects.get(id=1)
@@ -205,13 +206,13 @@ querySet = ModelName.objects.all
 quertSet = ModelName.objects.filter()
 ```
 
-#### 8.2 Admin Panel
+#### 7.2 Admin Panel
 Quick start interface to work with our data. But a personal panel can be made.
 
-#### 8.3 CRUD Methods (Copy, Read, Update, Delete)
+#### 7.3 CRUD Methods (Copy, Read, Update, Delete)
 While one can use the Admin Panel for it, a customized html page can also be made. Using methods like save() and delete(). Also, one can use Django Model Forms and/or Class-based views to handle these functionalities.
 
-#### 8.4 [Static files](https://youtu.be/0sMtoedWaf0?t=297)
+#### 7.4 [Static files](https://youtu.be/0sMtoedWaf0?t=297)
 These are .css, .js and images that are part of the application. One must declare the STATIC_ROOT, MEDIA_ROOT in the settings module.
 ```
 static/styles       
@@ -219,13 +220,13 @@ static/js
 static/images       
 ```
 
-#### 8.5 [Authentication](https://youtu.be/0sMtoedWaf0?t=302)
+#### 7.5 [Authentication](https://youtu.be/0sMtoedWaf0?t=302)
 Django offers builtin
 
-#### 8.6 [Signals](https://youtu.be/0sMtoedWaf0?t=360)
+#### 7.6 [Signals](https://youtu.be/0sMtoedWaf0?t=360)
 Django offers ways to add event listeners that fire-off actions every time the event occurs. For instance, send an e-mail when a new user registers in the website.
 
-### 9. Organizing Models in Apps
+### 8. Organizing Models in Apps
 A Django project contains one or more apps; each app provides a specific piece of functionality.
 
 #### Bad Example - Monolith
