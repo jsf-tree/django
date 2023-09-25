@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
+import dotenv
 from pathlib import Path
+
+
+# Load .env
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -90,10 +95,14 @@ DATABASES = {
         #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        "OPTIONS": {
-            "service": "my_service",  # psql --host=localhost --port=5432 --username=django --dbname=db_w_postgis
-            "passfile": ".pg_pass",   # must be in format of "hostname:port:database:username:password"
-        },
+        # 'ENGINE': 'django.db.backends.postgis', 🌳🌳🌳
+        # psql --host=localhost --port=5432 --username=django --dbname=db_w_postgis
+        # sudo -u postgres psql
+        'NAME': os.environ.get('DB_DEFAULT_NAME'),
+        'USER': os.environ.get('DB_DEFAULT_USER'),
+        'PASSWORD': os.environ.get('DB_DEFAULT_PASSWD'),
+        'HOST': os.environ.get('DB_DEFAULT_HOST'),
+        'PORT': os.environ.get('DB_DEFAULT_PORT'),
     }
 }
 

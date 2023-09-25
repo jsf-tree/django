@@ -273,7 +273,7 @@ Highly-related entities are kept together, maintaining the apps self-contained a
     - TaggesItem
 
 
-## PostgreSQL DB setup
+## 🐘 PostgreSQL DB setup 🐘
 ### To install PostgreSQL with PostGIS in WSL
 ```shell
 sudo apt update
@@ -288,18 +288,42 @@ sudo systemctl start postgresql
 ```
 
 ### Adjust PostgreSQL
-Get a PostgreSQL server online; Adjust `data/postgresql.conf` in PostgreSQL dir to permit connections by setting in `listen_addresses = '*'`; Ensure it is also permitted in `pg_hba.conf` by setting in `host all all 0.0.0.0/0 md5`. Create there a database (eg db_w_postgis) with superuser django.
-### Adjust Django
-Keep **.pg_pass** in the Django project root, where apps and projects are. Keep .**pg_service.conf** in **home dir**.
-```conf
-#.pg_pass
-[my_service]
-host=localhost
-user=django
-dbname=db_w_postgis
+Get a PostgreSQL server online;   
+In PostgreSQL dir (on Debian/Ubuntu, it is `/etc/postgresql/<version>/main/`), adjust in `data/postgresql.conf` to `listen_addresses = '*'` and in `pg_hba.conf` to permit connections with `host all all 0.0.0.0/0 md5`.
 
-# ".pg_service.conf" must be as "hostname:port:database:username:password"
-localhost:5432:db_w_postgis:django:django
+Access it via psql (on Linux, `sudo -u postgres psql` -- change password with `ALTER USER postgres PASSWORD 'new_password';`). Once inside it, create there a database (eg db_w_postgis) with superuser django.  
+
+Create a database with PostGIS
+```SQL
+CREATE DATABASE db_w_postgis;
+\c db_w_postgis;
+CREATE EXTENSION postgis;
+```
+
+Create a new user with specific permissions
+```SQL
+CREATE USER django WITH PASSWORD 'django';
+GRANT CONNECT ON DATABASE db_w_postgis TO django;
+GRANT USAGE ON SCHEMA public TO django;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO django;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO django;
+```
+
+For tests, **django** user must be able to create db: `ALTER USER django CREATEDB;`
+
+### Adjust Django
+Create a `.env` file and set the env variables; `pip install python-dotenv`; import it in **settings.py** and `dotenv.load_dotenv()`
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_DEFAULT_NAME'),
+        'USER': os.environ.get('DB_DEFAULT_USER'),
+        'PASSWORD': os.environ.get('DB_DEFAULT_PASSWD'),
+        'HOST': os.environ.get('DB_DEFAULT_HOST'),
+        'PORT': os.environ.get('DB_DEFAULT_PORT'),
+    }
+}
 ```
 Once the DB is set, 
 - Adjust your app's **models.py**;
@@ -335,7 +359,7 @@ pip3 install pipenv
 
 # Install django and psycopg2¹ (to enable PostgreSQL connection) to the pipenv
 pipenv install django psycopg2-binary django-debug-toolbar
-#¹ normal psycopg2 continuously fail <https://github.com/pypa/pipenv/issues/3991>
+#¹ normal psycopg continuously fail <https://github.com/pypa/pipenv/issues/3991>
 
 # Activate the virtual environment
 pipenv shell
