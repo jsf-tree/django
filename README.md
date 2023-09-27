@@ -335,6 +335,42 @@ _To check the migration SQL, type `python manage.py sqlmigrate <app> <migration_
 ### The Database API
 `python manage.py shell` activates python with the **settings.py**. Table-classes can be imported from models and instantiated. Their method `.save()` must be called to add it to the database. All registers in a table can be called via `<class>.objects.all()`. They can be filtered `<class>.objects.filter(an_attrib)`. Relationships are further available depending on the attribute type (eg string accepts `<str_attrib__endswith>=text, <str_attrib__startswith>=text`; datetime accepts `<dt_attrib__year>=a_year`; FK relationship attributes accept `<FJ>__attrib`.. This works as many levels deep as you want. There's no limit.
 
+### The Django test client
+Django provides a test **Client** to simulate a user interacting with the code at the view level either via `python manage.py shell` or **views.py**.
+```python
+>>> from django.test.utils import setup_test_environment
+
+# Install the template renderer to examine additional attrib on responses
+# such as response.context
+# Make sure you have TIME_ZONE set in settings.py before continuing
+>>> setup_test_environment()
+>>> from django.test import Client
+>>> client = Client()
+
+# Simulate the Client trying an URL
+>>> response = client.get("/")
+>>> response.status_code        # Check status_code
+
+# One can also use namespaces via reverse to avoid hardcoding
+>>> from django.urls import reverse
+>>> response = client.get(reverse("polls:index"))
+>>> response.content # Check content
+>>> response.context["latest_question_list"] # Check context
+```
+In **views.py** we added `def queryset(self)` to the generic views so that they return questions that are not in the future. Furthermore, we added two test classes in **test.py** , one for each type of generic view.
+
+When testting, more is better. Good rules-of-thumb are:
+- a separate TestClass for each model or view
+- a separate test method for each set of conditions you want to test
+- test method names that describe their function
+
+---
+
+### Static Files -  Tutorial06
+Create a dir `<app_name>/static/<app_anem>/`. Inside it, keep JS, CSS and image files. Inside the templates, you must add `{% load static %}` at the top to generate the absolute URL of static files. Then, you can simply import them similarly as if by using HTML, while referencing static: `<link rel="stylesheet" href="{% static 'polls/style.css' %}">`
+
+---
+
 ### Django Admin
 newsroom, unified interface for site administrators to edit content, admin isnt intended to be used by site visitors.
 
