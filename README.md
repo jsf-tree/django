@@ -1,50 +1,21 @@
 # [Django](https://docs.djangoproject.com/)
-A popular Python framework for backend webdev, nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.
+A popular Python framework for backend webdev, nowadays mostly used to build APIs that retrieve data, leaving the responsibility for serving HTML to the frontend.  
 Tutorials: [Overview of Django in 8 Mins](https://youtu.be/0sMtoedWaf0); [Mosh](https://youtu.be/rHux0gMZ3Eg) uses `pipenv` to manage envs &  dependencies;  
 [Django Oficial Tutorial](https://docs.djangoproject.com/en/4.2/intro/): 2-[Models_dbAPI_AdminPage](https://docs.djangoproject.com/en/4.2/intro/tutorial02/), 3-[Views_Templates_Namespacing](https://docs.djangoproject.com/en/4.2/intro/tutorial03/), 4-[Forms_GenericViews](https://docs.djangoproject.com/en/4.2/intro/tutorial04/).
 
-To start the server: `pipenv shell` and `python manage.py runserver <port-number>`  
-_Scroll to the end for pipenv and django installation_
+```shell
+pipenv shell  # Django & pipenv installation at the end
+python manage.py runserver <port-number>
+```
 
 ### Loose coupling philosophy
-Django uses a main project (often named after setup or mysite) and several apps that plug to the project. This framework's philosophy follows loose coupling, meaning it provides ways to use an app in another projects. Because of this, each file has a clear responsibility.
+Django has a main project (often named setup/config/mysite) and a collection of plugable apps for each functionality, which can be reused in other projects.
 
 ![image](/img.svg "Flowchart")
 
 ### 1. Create a Project
-`django-admin startproject setup .` creates a project called setup in the current directory with the **manage.py** (a wrapper¹ around `django-admin` that takes settings.py into account) and the default project folder with
+"`django-admin startproject <project_name> .`" creates the boilerplate project in current dir with default files and **manage.py** (a wrapper¹ around `django-admin` that takes settings.py into account): . The default files are **wsgi.py** & **asgi.py** (for deployment), **urls.py** (for endpoint routing) and **settings.py**, in which configurations are set, like **INSTALLED_APPS** to keep the registered apps within the project:
 
-| Default file     | Reponsibility                                                     |
-| ---------------- | ----------------------------------------------------------------- |
-| __init__.py      | defines this directory as a package                               |
-| settings.py      | defines the app settings                                          |
-| urls.py          | define urls of the application                                    |
-| wsgi and asgi.py | used for deployment                                               |
-
-When the server is run, it creates a `db.sqlite3` database if you have no database in your project.
-
-Five commonly used commands in Django are:
-```shell
-# Creates boilerplate django files
-django-admin startproject <project-name>
-
-# Creates boilerplate of app folder and files
-python manage.py startapp <app-name>
-
-# Preps our database for migrations
-python manage.py makemigrations
-
-# Executes our migrations & updates the database
-python manage.py migrate
-
-# Creates a user with admin level permissions for the db
-python manage.py createsuperuser
-```
-
-### 2. Create an App
-Every Django Project is a collection of several apps, each app providing a certain functionality. 
-In `settings.py` module, the INSTALLED_APPS keeps the registered apps.
-Here are the default apps:
 | Default installed apps      | Usage                                                   |
 |-----------------------------|---------------------------------------------------------|
 | django.contrib.admin        | admin interface for managing our data                   |
@@ -54,31 +25,29 @@ Here are the default apps:
 | django.contrib.messages     | display one-time notifications to the user              |
 | django.contrib.staticfiles  | serving static files to the user (images, css, etc)     |
 
-To create the first app, open a new terminal, cd to where the "venv shell" is set 
-(ie. where "Pipfile and Pipfile.lock" are), 
-and run `python manage.py startapp myfirstapp`. 
-This creates a folder (every Django app has the exact same structure):
+> If no database is set, Django creates a `db.sqlite3` db on the first run.
+
+### 2. Create an App
+"`python manage.py startapp <app-name>`" creates the boilerplate app 
 | Default files | Usage                                                                                     |
-|---------------|-------------------------------------------------------------------------------------------| 
-| migrations    | generating database tables                                                                |
-| admin         | how the admin interface for this app will look like                                       |
-| apps          | where you configure the app                                                               |
-| models        | define the model classes (which pull out data from the database and present to the user)  |
-| tests         | define unit tests                                                                         |
-| views         | request handlers                                                                          |
+|---------------|----------------------------------| 
+| migrations    | generating database tables       |
+| admin         | set up the app's admin interface |
+| apps          | where you configure the app      |
+| models        | define database tables           |
+| tests         | define unit tests                |
+| views         | request-response handlers        |
 
-> Every new app must be registered in the setup settings modules, in the list of INSTALLED_APPS
+> Apps must be registered in **INSTALLED_APPS** under project's settings.py 
 
-### 3. [Views](https://docs.djangoproject.com/en/4.2/intro/tutorial03/), the public interface
-Every data exchange involves a request and a response, which is achieved by protocols like HTTP. Views are the public interface, providing handlers (in the form of **functions** or **classes**) that connect user's requests coming through the endpoints in **urls.py** and perform actions like serving a html (**templates.py**) or interacting with the database (**models.py**). Effectively, views are request handlers (ie they handle the "request -> response" flow). Some frameworks call it an "action".
 
-> Angle brackets “captures” part of the URL and sends it as a keyword argument to the view function. In `hello/<str:name>`, the part after "/" will get converted to "str" and stored to a var called "name", which will be used as a keyword in the view method.  
+### 3. [Views](https://docs.djangoproject.com/en/4.2/topics/http/views/), the public interface ([Tutorial 03](https://docs.djangoproject.com/en/4.2/intro/tutorial03/))
+Views are Request-Response HTTP handlers (in the form of **functions** or **classes**) connecting the endpoints (**urls.py**) to actions like serving a html (**templates.py**) or interacting with the database (**models.py**).
 
-- **Views** stay under the respective app's **views.py**:
+- **Views** are in `app_name/views.py`
 ```python
-from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.shortcuts import render
 
 # Function-based view
 def say_hello(request, name=''):
@@ -88,21 +57,23 @@ def say_hello(request, name=''):
 class ProfileView(View):
     def get(self, request):
         user = getUser()
-        # "<app_name>/" is how you can namespace your templates
-        return render(request, '<app_name>/profile.html', {'user':user})
+        # the template "profile.html" is namespaced with "app_name"
+        return render(request, 'app_name/profile.html', {'user':user})
     def post(self, request):
         pass
 ```
-- **URL routing** can be kept under the respective app's dir by creating **urls.py**:
+
+- **Endpoints & URL routing** are in `app_name/urls.py`:
 ```python
 from django.urls import path
 from . import views
 
-
-# add name(space) for loose coupling
+app_name = 'app_name'  # namespacing
 urlpatterns = [
-    path('hello/', views.say_hello, name='without_name'),
-    path('hello/<str:name>', views.say_hello, name='with_name'),
+    path('', views.say_hello, name='without_name'),
+
+    # Angle brackets “captures” part of the URL and send it as a keyword arg to the view function. In `app_name/<str:name>`, the part after "/" converts to "str",  stores in a var called "name" and is passed to the view.
+    path('<str:name>/', views.say_hello, name='with_name'),
 ]
 ```
 
@@ -113,18 +84,17 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('<app_name>/', include('<app_name>.urls')),
+    path('app_name/', include('app_name.urls')),
 ]
-```
-#### 3+ [Generic Views](https://docs.djangoproject.com/en/4.2/intro/tutorial04/)
-**Generic views** abstract common patterns to the point where you don’t even need to write Python code to write an app.
+```  
 
+Django also offers [Generic Views](https://docs.djangoproject.com/en/4.2/intro/tutorial04/) which are common patterns of views to quickly write an app.
 
 ### 4. [Templates](https://docs.djangoproject.com/en/4.2/topics/templates/), the html
-**Templates** are html files kept under the app's dir, like `<app_dir>/templates/<app_name>/index.html`.  
-_Best Practice: the subfolder **app_name** namespaces the app templates and guarantees correctly  routing when the Project group all the app's template together._
+**Templates** are HTML files served by views. They are kept inside a namespaced template folder following the format: `<app_dir>/templates/<app_name>/index.html`.  
+> Best Practice: the subfolder **app_name** in **templates** namespaces the app templates and guarantees correctly  routing when the Project groups all the app's templates together. This way, different index.html will be recognizable: `<app_name1>/index.html` and `<app_name2>/index.html`  
 
-The example of a template below shows the modular syntax:
+Django Template syntax supports IO (context) and loops:
 ```html
 <!-- this is only an example, for serious projects write full html docs-->
 {% if name %}
@@ -133,13 +103,13 @@ The example of a template below shows the modular syntax:
     <h1>Hello, World!</h1>
 {% endif %}
 ```
-3. in views, add the request handler:
+The caller view would send "name" as  context:
 ```python
 def say_hello(request):
     return render(request, 'hello.html', context={'name': 'juliano'})
 ```
 
-A solid understanding of the Django template language for html is useful:
+A solid understanding of the Django template language for HTML is useful:
 ```html
 <!-- Variables in Django -->
 {{ variable }}
@@ -153,6 +123,11 @@ A solid understanding of the Django template language for html is useful:
     {% endfor %}
 </ul>    
 ```
+
+### [Static files](https://docs.djangoproject.com/en/4.2/howto/static-files/): further customization  [tutorial 6](https://docs.djangoproject.com/en/4.2/intro/tutorial06/)
+Create a namespaced dir `<app_name>/static/<app_name>/` to keep JS, CSS and image files. Templates require `{% load static %}` at the top to generate the absolute URL to static files and the link  
+ `<link rel="stylesheet" href="{% static 'polls/style.css' %}">`
+ While the [default staticfiles app](https://docs.djangoproject.com/en/4.2/ref/contrib/staticfiles/), a more robust & secure approach is needed in production: [staticfiles in production](https://docs.djangoproject.com/en/4.2/howto/static-files/deployment/).
 
 ### 5. [Models](), the database tables
 They are class-based representations of our database table and constitute the core of database design in Django. They inherit from Django Models. Attributes represent the columns for the table. One can create relations between 1:1, n:1, and n:m. You can use an optional first positional argument to a Field to designate a human-readable name. 
@@ -195,8 +170,6 @@ INTERNAL_IPS = [
 ```
 The toolbar only appears if a html document is being served. Within the toolbar, the SQL panel shows the queries called in the database. When querying the database using Djangos querying relational mapper, it generates queries and send to the database (here the generated queries can be seen).
 
-
-
 ### 7. Other functionalities in Django
 #### 7.1 Django ORM
 Django has a builtin ORM that helps working with the database. Here are a few the methods to retrieve data from the database via ORM:
@@ -206,8 +179,48 @@ querySet = ModelName.objects.all
 quertSet = ModelName.objects.filter()
 ```
 
-#### 7.2 Admin Panel
-Quick start interface to work with our data. But a personal panel can be made.
+#### 7.2 [Admin](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/) Panel [tutorial 7](https://docs.djangoproject.com/en/4.2/intro/tutorial07/)
+It creates an interface to work with your data (models). Each app must enable the admin interface or its model in its `<app_name>/admin.py`. The admin interface for each model can be customized and a model's admin interface can operate with other models for the case they have FK to other models (StackedInline and TabularInlline are two options).
+```python
+from django.contrib import admin
+from .models import Question # 🌳 Tell Django that Question has an Admin Interface
+
+# Default interface
+admin.site.register(Question)
+
+# Change default: create a Model Admin Class & pass it as 2nd arg to admin.site.register()
+
+class ChoiceInline(admin.StackedInline):
+    # Stacked FK subinterface, default 3
+    model = Choice
+    extra = 3
+
+class ChoiceInline(admin.TabularInline):
+    # Tabular FK subinterface, default 3
+    model = Choice
+    extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+    # Group fields in sets
+    fieldsets = [
+        (None, {"fields": ["question_text"]}),
+        ("Date information", {"fields": ["pub_date"], "classes": ["collapse"]}),
+    ]
+    inlines = [ChoiceInline]
+    # Change the list display (attributes and methods are possible)
+    list_display = ["question_text", "pub_date", "was_published_recently"]
+    # Adds a filter sidebar
+    list_filter = ["pub_date"]
+    # Add search functionality
+    search_fields = ["question_text"]
+
+admin.site.register(Question, QuestionAdmin)
+```
+
+The Admin template itself can be customized.
+Create a "templates" folder in project root directory (where manage.py is) and add a DIRS option in TEMPLATES setting.
+
+
 
 #### 7.3 CRUD Methods (Copy, Read, Update, Delete)
 While one can use the Admin Panel for it, a customized html page can also be made. Using methods like save() and delete(). Also, one can use Django Model Forms and/or Class-based views to handle these functionalities.
@@ -308,6 +321,11 @@ GRANT USAGE ON SCHEMA public TO django;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO django;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO django;
 ```
+Alternatively,
+```shell
+# Creates a user with admin level permissions for the db
+python manage.py createsuperuser
+```
 
 For tests, **django** user must be able to create db: `ALTER USER django CREATEDB;`
 
@@ -324,6 +342,7 @@ DATABASES = {
         'PORT': os.environ.get('DB_DEFAULT_PORT'),
     }
 }
+
 ```
 Once the DB is set, 
 - Adjust your app's **models.py**;
@@ -366,8 +385,6 @@ When testting, more is better. Good rules-of-thumb are:
 
 ---
 
-### Static Files -  Tutorial06
-Create a dir `<app_name>/static/<app_anem>/`. Inside it, keep JS, CSS and image files. Inside the templates, you must add `{% load static %}` at the top to generate the absolute URL of static files. Then, you can simply import them similarly as if by using HTML, while referencing static: `<link rel="stylesheet" href="{% static 'polls/style.css' %}">`
 
 ---
 
